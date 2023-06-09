@@ -1,5 +1,13 @@
+# САЙТ ДЛЯ ПРИВЕДЕНИЯ КОДА К PEP8
+# https://extendsclass.com/python-formatter.html
+#
+
+
+
+
+
 #---------------------------------------------
-#                   6
+#                   5
 #---------------------------------------------
 
 # >>> main([-0.11, 0.05, -0.03],[-0.92, -0.7, -0.08],[0.99, -0.77, 0.74]) // Ваня Лягов
@@ -160,12 +168,43 @@ def main(num):
 # >>> main('1422331148') // 22 (Соня Сивцова)
 # '0x6230d0c'
 
+# main('0x38f1553')        // 28
+# '62432083'
 
 
 #---------------------------------------------
 #                   8
 #---------------------------------------------
 
+# [ define 'errebi' := { leed_684 . onrebe_686 }.].[ define 'tius' :={    // 21 (Саша Сердюков)
+# rasodi_67 . gela }.].[define 'isen_272':={ ceaated_924 . eddiri_329 .
+# orceve . rala_499 }. ].[ define 'maedra' := { dius_549 . maes}. ]
+
+# {'errebi': ['leed_684', 'onrebe_686'],
+# 'tius': ['rasodi_67', 'gela'],
+# 'isen_272': ['ceaated_924', 'eddiri_329', 'orceve', 'rala_499'],
+# 'maedra': ['dius_549', 'maes']}
+
+import re
+
+def parse_string(input_string):
+    pattern = r"define '(\w+)' := \{([^}]+)\}"
+    matches = re.findall(pattern, input_string)
+
+    result = {}
+    for match in matches:
+        key = match[0]
+        values = match[1].split('. ')
+        result[key] = values
+
+    return result
+
+input_string = "[ define 'errebi' := { leed_684 . onrebe_686 }.].[ define 'tius' :={ rasodi_67 . gela }]." \
+               "[define 'isen_272':={ ceaated_924 . eddiri_329 . orceve . rala_499 }. ]." \
+               "[ define 'maedra' := { dius_549 . maes}. ]"
+
+output = parse_string(input_string)
+print(output)
 
 
 #---------------------------------------------
