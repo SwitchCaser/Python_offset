@@ -6,10 +6,13 @@
 #                   8
 #---------------------------------------------
 
-# [ define 'errebi' := { leed_684 . onrebe_686 }.].[ define 'tius' :={    // 21 (Саша Сердюков)
+### Вариант 21 (Саша Сердюков)
+# Входные:
+# [ define 'errebi' := { leed_684 . onrebe_686 }.].[ define 'tius' :={
 # rasodi_67 . gela }.].[define 'isen_272':={ ceaated_924 . eddiri_329 .
 # orceve . rala_499 }. ].[ define 'maedra' := { dius_549 . maes}. ]
 
+# Выходные:
 # {'errebi': ['leed_684', 'onrebe_686'],
 # 'tius': ['rasodi_67', 'gela'],
 # 'isen_272': ['ceaated_924', 'eddiri_329', 'orceve', 'rala_499'],
