@@ -2,6 +2,34 @@
 #                   6
 #---------------------------------------------
 
+# >>> main([-0.11, 0.05, -0.03],[-0.92, -0.7, -0.08],[0.99, -0.77, 0.74]) // Ваня Лягов
+# 
+
+import math as m
+
+
+def main(x, y, z):
+    n = len(x)
+    x = [0] + x
+    y = [0] + y
+    z = [0] + z
+    sum = 0
+    for i in range(1, n + 1):
+        term1 = 30 * (y[n + 1 - i] ** 3)
+        term2 = -x[n + 1 - m.ceil(i / 2)]
+        term3 = -(z[n + 1 - m.ceil(i / 2)] ** 2)
+        sum += term1 + term2 + term3
+    return sum * 7
+
+
+
+#---------------------------------------------
+#                   6
+#---------------------------------------------
+
+# // 13 (Андрей Лахов)
+#
+
 def firsLine(x0, x1, x2, x3):
     if(x0 == 'OPA'):
         return SecondParam1(x2, x3)
@@ -51,12 +79,44 @@ def main(x):
     return firsLine(x[0], x[1], x[2], x[3])
 
 
+# main([2008, 'BISON', 'OPA', 1993, 1980] // Ваня Лягов
+# 7
+
+def main(x):
+    patterns = {
+        (1999, None, 'OPA', 1993, None): 0,
+        (1999, None, 'OPA', 1994, None): 1,
+        (1999, None, 'OPA', 1992, 1962): 2,
+        (1999, None, 'OPA', 1992, 1980): 3,
+        (2008, 'HY', 'OPA', None, 1962): 4,
+        (2008, 'HY', 'OPA', None, 1980): 5,
+        (2008, 'DM', 'OPA', None, None): 6,
+        (2008, 'BISON', 'OPA', 1993, None): 7,
+        (2008, 'BISON', 'OPA', 1994, None): 8,
+        (2008, 'BISON', 'OPA', 1992, None): 9,
+        (1960, None, 'OPA', None, None): 10,
+        (None, None, 'TOML', None, None): 11,
+        (None, None, 'MAX', None, None): 12,
+    }
+
+    for pattern, result in patterns.items():
+        match = True
+        for i in range(len(pattern)):
+            if pattern[i] is not None and pattern[i] != x[i]:
+                match = False
+                break
+        if match:
+            return result
+    return None
+
+# 
+#
 
 #---------------------------------------------
 #                   7
 #---------------------------------------------
 
-# >>>main({'Z1': '4', 'Z2': '82', 'Z3': '11', 'Z4': '21', 'Z5': '4'}) // 13 (Андрей Лахов)
+# >>> main({'Z1': '4', 'Z2': '82', 'Z3': '11', 'Z4': '21', 'Z5': '4'}) // 13 (Андрей Лахов)
 # 4906276
 
 def converter(Z1, Z2, Z3, Z4, Z5):
@@ -94,6 +154,7 @@ def main(num):
     
 # >>> main('0x1ac0998c') // 21 (Саша Сердюков)
 # [('V1', '0xc'), ('V2', '0x3'), ('V3', '0x4c'), ('V4', '0x0'), ('V5', '0x6b'), ('V6', '0x0')]
+
 
 
 # >>> main('1422331148') // 22 (Соня Сивцова)
