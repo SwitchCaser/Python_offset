@@ -1,4 +1,107 @@
+# САЙТ ДЛЯ ПРИВЕДЕНИЯ КОДА К PEP8
+# https://extendsclass.com/python-formatter.html
+#
 
+#---------------------------------------------
+#                   7
+#---------------------------------------------
+
+### Вариант 13
+# Входные: main({'Z1': '4', 'Z2': '82', 'Z3': '11', 'Z4': '21', 'Z5': '4'})                   ### decimal_parts to decimal
+# Выходные: 4906276
+
+def converter(Z1, Z2, Z3, Z4, Z5):
+    numZ1 = int(Z1)
+    numZ2 = int(Z2)
+    numZ3 = int(Z3)
+    numZ4 = int(Z4)
+    numZ5 = int(Z5)
+
+    answer = numZ5
+    answer = answer << 5
+    answer = answer | numZ4
+    answer = answer << 4
+    answer = answer | numZ3
+    answer = answer << 7
+    answer = answer | numZ2
+    answer = answer << 4
+    answer = answer | numZ1
+    return answer
+
+
+def main(x):
+    return converter(x['Z1'], x['Z2'], x['Z3'], x['Z4'], x['Z5'])
+    
+# >>> main(64263930) // Юля Трофимова
+# '0x5af527a'
+
+def main(num):
+    num = int(num)
+    d1 = num & (2**7 - 1)
+    d2 = (num >> 7) & (2**6 - 1)
+    d3 = (num >> 13) & (2**10 - 1)
+    d4 = (num >> 23) & (2**4 - 1)
+    return hex((d2 << 21) + (d4 << 17) + (d3 << 7) + d1)
+    
+# >>> main('0x1ac0998c') // 21 (Саша Сердюков)
+# [('V1', '0xc'), ('V2', '0x3'), ('V3', '0x4c'), ('V4', '0x0'), ('V5', '0x6b'), ('V6', '0x0')]
+
+
+
+# >>> main('1422331148') // 22 (Соня Сивцова)
+# '0x6230d0c'
+
+#####Первое решение(оптимальное)
+def main(x):
+    return GetValue(x)
+
+def GetValue(x):
+    number = int(x)
+    W1 = number & int('11111111',2)
+    number = number >> 8
+    W2 = number & int('1111111111',2)
+    number = number >> 10
+    W3 = number & int('1111111',2)
+    number = number >> 7
+    number = number >> 6
+    W5 = number & int('111',2)
+
+    #000 101010 0110001 1100001101 00001100
+    #000000 0110001 000 1100001101 00001100
+
+    answer = W3
+    answer = (answer << 3) | W5
+    answer = (answer << 10) | W2
+    answer = (answer << 8) | W1
+
+    return answer
+
+a = main('1422331148')
+print(hex(a))
+
+#####Второе решение(неоптимальное)
+def main(decimal_string):
+    decimal_number = int(decimal_string)
+    
+    w1 = format(int(bin(decimal_number & 0xFF), 2), '08b')
+    w2 = format(int(bin((decimal_number & 0x3FFFF) >> 8), 2), '010b')
+    w3 = format(int(bin((decimal_number & 0x1FFFFFF) >> 18), 2), '07b')
+    w5 = format(int(bin(decimal_number >> 31), 2), '03b')
+    
+    return hex(int(w3 + w5 + w2 + w1, 2))
+
+
+# main('0x38f1553')        // 28
+# '62432083'
+
+def main(x):
+    dec = int(x, 16)
+    H1 = 0b111111111 & dec
+    H2 = ((dec >> 9) & 0b1) << 22
+    H3 = ((dec >> 10) & 0b111111111) << 13
+    H4 = ((dec >> 19) & 0b1111) << 9
+    H5 = ((dec >> 23) & 0b111) << 23
+    return H1 | H2 | H3 | H4 | H5
 ### Вариант 38
 # Входные: main({'F1': 462, 'F2': 4, 'F3': 107, 'F4': 0, 'F5': 2})
 # Выходные: '0x26b09ce'
