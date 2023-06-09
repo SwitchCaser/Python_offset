@@ -1,0 +1,87 @@
+#---------------------------------------------
+#                   6
+#---------------------------------------------
+
+# // 13 (Андрей Лахов)
+#
+
+def firsLine(x0, x1, x2, x3):
+    if(x0 == 'OPA'):
+        return SecondParam1(x2, x3)
+    if(x0 == 'LIMBO'):
+        return SecondParam2(x1, x2)
+    if(x0 == 'APL'):
+        return 10
+
+
+def SecondParam1(x2, x3):
+    if(x2 == 1983):
+        return ThirdParam1(x3)
+    if(x2 == 1964):
+        return 3
+    if(x2 == 1984):
+        return 4
+# САЙТ ДЛЯ ПРИВЕДЕНИЯ КОДА К PEP8
+# https://extendsclass.com/python-formatter.html
+
+
+def SecondParam2(x1, x2):
+    if(x2 == 1983):
+        return ThirdParam2(x1)
+    if(x2 == 1964):
+        return 8
+    if(x2 == 1984):
+        return 9
+
+
+def ThirdParam1(x3):
+    if(x3 == 1975):
+        return 0
+    if(x3 == 2016):
+        return 1
+    if(x3 == 1969):
+        return 2
+
+
+def ThirdParam2(x1):
+    if(x1 == 1957):
+        return 5
+    if(x1 == 1970):
+        return 6
+    if(x1 == 1985):
+        return 7
+
+
+def main(x):
+    return firsLine(x[0], x[1], x[2], x[3])
+
+
+# main([2008, 'BISON', 'OPA', 1993, 1980] // Ваня Лягов
+# 7
+
+def main(x):
+    patterns = {
+        (1999, None, 'OPA', 1993, None): 0,
+        (1999, None, 'OPA', 1994, None): 1,
+        (1999, None, 'OPA', 1992, 1962): 2,
+        (1999, None, 'OPA', 1992, 1980): 3,
+        (2008, 'HY', 'OPA', None, 1962): 4,
+        (2008, 'HY', 'OPA', None, 1980): 5,
+        (2008, 'DM', 'OPA', None, None): 6,
+        (2008, 'BISON', 'OPA', 1993, None): 7,
+        (2008, 'BISON', 'OPA', 1994, None): 8,
+        (2008, 'BISON', 'OPA', 1992, None): 9,
+        (1960, None, 'OPA', None, None): 10,
+        (None, None, 'TOML', None, None): 11,
+        (None, None, 'MAX', None, None): 12,
+    }
+
+    for pattern, result in patterns.items():
+        match = True
+        for i in range(len(pattern)):
+            if pattern[i] is not None and pattern[i] != x[i]:
+                match = False
+                break
+        if match:
+            return result
+    return None
