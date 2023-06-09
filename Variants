@@ -168,8 +168,57 @@ def main(num):
 # >>> main('1422331148') // 22 (Соня Сивцова)
 # '0x6230d0c'
 
+#####Первое решение(оптимальное)
+def main(x):
+    return GetValue(x)
+
+def GetValue(x):
+    number = int(x)
+    W1 = number & int('11111111',2)
+    number = number >> 8
+    W2 = number & int('1111111111',2)
+    number = number >> 10
+    W3 = number & int('1111111',2)
+    number = number >> 7
+    number = number >> 6
+    W5 = number & int('111',2)
+
+    #000 101010 0110001 1100001101 00001100
+    #000000 0110001 000 1100001101 00001100
+
+    answer = W3
+    answer = (answer << 3) | W5
+    answer = (answer << 10) | W2
+    answer = (answer << 8) | W1
+
+    return answer
+
+a = main('1422331148')
+print(hex(a))
+
+#####Второе решение(неоптимальное)
+def main(decimal_string):
+    decimal_number = int(decimal_string)
+    
+    w1 = format(int(bin(decimal_number & 0xFF), 2), '08b')
+    w2 = format(int(bin((decimal_number & 0x3FFFF) >> 8), 2), '010b')
+    w3 = format(int(bin((decimal_number & 0x1FFFFFF) >> 18), 2), '07b')
+    w5 = format(int(bin(decimal_number >> 31), 2), '03b')
+    
+    return hex(int(w3 + w5 + w2 + w1, 2))
+
+
 # main('0x38f1553')        // 28
 # '62432083'
+
+def main(x):
+    dec = int(x, 16)
+    H1 = 0b111111111 & dec
+    H2 = ((dec >> 9) & 0b1) << 22
+    H3 = ((dec >> 10) & 0b111111111) << 13
+    H4 = ((dec >> 19) & 0b1111) << 9
+    H5 = ((dec >> 23) & 0b111) << 23
+    return H1 | H2 | H3 | H4 | H5
 
 
 #---------------------------------------------
