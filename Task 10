@@ -1,0 +1,107 @@
+# САЙТ ДЛЯ ПРИВЕДЕНИЯ КОДА К PEP8
+# https://extendsclass.com/python-formatter.html
+
+#---------------------------------------------
+#                   10
+#---------------------------------------------
+
+# o = main() // 13 (Андрей Лахов)
+#o.etch() # 0
+#o.init() # 3
+#o.pan() # 1
+#o.init() # 5
+#o.etch() # 0
+#o.pan() # 1
+#o.etch() # 4
+#o.init() # 6
+#o.pan() # MealyError
+#o.etch() # 7
+#o.init() # 8
+#o.init() # 6
+#
+
+class MealyError(Exception):
+    def __init__(self, nameOfMethod):
+        self.ExceptionMethod = nameOfMethod
+
+
+class Avtomat:
+    State = "A"
+
+    def etch(self):
+        if(self.State == "A"):
+            self.State = "B"
+            return 0
+        elif(self.State == "B"):
+            self.State = "D"
+            return 2
+        elif(self.State == "C"):
+            self.State = "D"
+            return 4
+        elif(self.State == "E"):
+            self.State = "F"
+            return 7
+        else:
+            raise MealyError(self.etch.__name__)
+
+    def init(self):
+        if(self.State == "B"):
+            return 3
+        elif(self.State == "C"):
+            self.State = "A"
+            return 5
+        elif(self.State == "D"):
+            self.State = "E"
+            return 6
+        elif(self.State == "F"):
+            self.State = "D"
+            return 8
+        else:
+            raise MealyError(self.init.__name__)
+
+    def pan(self):
+        if(self.State == "B"):
+            self.State = "C"
+            return 1
+        else:
+            raise MealyError(self.pan.__name__)
+
+
+def main():
+    return Avtomat()
+
+
+def test():
+    o = main()
+    assert o.etch() == 0
+    assert o.etch() == 2
+    o.State = "C"
+    assert o.etch() == 4
+    o.State = "E"
+    assert o.etch() == 7
+    o.State = "D"
+    try:
+        assert o.etch()
+    except MealyError:
+        pass
+
+    o.State = "B"
+    assert o.init() == 3
+    o.State = "C"
+    assert o.init() == 5
+    o.State = "D"
+    assert o.init() == 6
+    o.State = "F"
+    assert o.init() == 8
+    o.State = "A"
+    try:
+        assert o.init()
+    except MealyError:
+        pass
+
+    o.State = "B"
+    assert o.pan() == 1
+    try:
+        assert o.pan()
+    except MealyError:
+        pass
