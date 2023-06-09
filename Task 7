@@ -8,6 +8,7 @@
 # hex to hex_parts
 # str(decimal) to hex
 # hex to decimal
+# decimal_parts to hex
 
 #---------------------------------------------
 #                   7
@@ -119,6 +120,7 @@ def main(x):
     H4 = ((dec >> 19) & 0b1111) << 9
     H5 = ((dec >> 23) & 0b111) << 23
     return H1 | H2 | H3 | H4 | H5
+
 ### Вариант 38
 # Входные: main({'F1': 462, 'F2': 4, 'F3': 107, 'F4': 0, 'F5': 2})
 # Выходные: '0x26b09ce'
@@ -131,3 +133,15 @@ def main(x):
     f4 = x.get('F4') << 23
     f5 = x.get('F5') << 24
     return hex(f1 | f2 | f3 | f4 | f5)
+
+### Вариант 39                                                                       #decimal_parts to hex
+# Входные: main((1, 37, 0, 3))
+# Выходные: '0x1a501'
+
+def main(x):
+    result = 0x0
+    result |= x[3] << 15
+    result |= x[2] << 14
+    result |= x[1] << 8
+    result |= x[0]
+    return hex(result)
