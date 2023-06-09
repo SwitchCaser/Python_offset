@@ -1,0 +1,207 @@
+#---------------------------------------------
+#                   6
+#---------------------------------------------
+
+def firsLine(x0, x1, x2, x3):
+    if(x0 == 'OPA'):
+        return SecondParam1(x2, x3)
+    if(x0 == 'LIMBO'):
+        return SecondParam2(x1, x2)
+    if(x0 == 'APL'):
+        return 10
+
+
+def SecondParam1(x2, x3):
+    if(x2 == 1983):
+        return ThirdParam1(x3)
+    if(x2 == 1964):
+        return 3
+    if(x2 == 1984):
+        return 4
+
+
+def SecondParam2(x1, x2):
+    if(x2 == 1983):
+        return ThirdParam2(x1)
+    if(x2 == 1964):
+        return 8
+    if(x2 == 1984):
+        return 9
+
+
+def ThirdParam1(x3):
+    if(x3 == 1975):
+        return 0
+    if(x3 == 2016):
+        return 1
+    if(x3 == 1969):
+        return 2
+
+
+def ThirdParam2(x1):
+    if(x1 == 1957):
+        return 5
+    if(x1 == 1970):
+        return 6
+    if(x1 == 1985):
+        return 7
+
+
+def main(x):
+    return firsLine(x[0], x[1], x[2], x[3])
+
+
+
+#---------------------------------------------
+#                   7
+#---------------------------------------------
+
+# >>>main({'Z1': '4', 'Z2': '82', 'Z3': '11', 'Z4': '21', 'Z5': '4'}) // 13 (Андрей Лахов)
+# 4906276
+
+def converter(Z1, Z2, Z3, Z4, Z5):
+    numZ1 = int(Z1)
+    numZ2 = int(Z2)
+    numZ3 = int(Z3)
+    numZ4 = int(Z4)
+    numZ5 = int(Z5)
+
+    answer = numZ5
+    answer = answer << 5
+    answer = answer | numZ4
+    answer = answer << 4
+    answer = answer | numZ3
+    answer = answer << 7
+    answer = answer | numZ2
+    answer = answer << 4
+    answer = answer | numZ1
+    return answer
+
+
+def main(x):
+    return converter(x['Z1'], x['Z2'], x['Z3'], x['Z4'], x['Z5'])
+    
+# >>> main(64263930) // Юля Трофимова
+# '0x5af527a'
+
+def main(num):
+    num = int(num)
+    d1 = num & (2**7 - 1)
+    d2 = (num >> 7) & (2**6 - 1)
+    d3 = (num >> 13) & (2**10 - 1)
+    d4 = (num >> 23) & (2**4 - 1)
+    return hex((d2 << 21) + (d4 << 17) + (d3 << 7) + d1)
+    
+# >>> main('0x1ac0998c') // 21 (Саша Сердюков)
+# [('V1', '0xc'), ('V2', '0x3'), ('V3', '0x4c'), ('V4', '0x0'), ('V5', '0x6b'), ('V6', '0x0')]
+
+
+# >>> main('1422331148') // 22 (Соня Сивцова)
+# '0x6230d0c'
+
+
+
+#---------------------------------------------
+#                   10
+#---------------------------------------------
+
+# o = main() // 13 (Андрей Лахов)
+#o.etch() # 0
+#o.init() # 3
+#o.pan() # 1
+#o.init() # 5
+#o.etch() # 0
+#o.pan() # 1
+#o.etch() # 4
+#o.init() # 6
+#o.pan() # MealyError
+#o.etch() # 7
+#o.init() # 8
+#o.init() # 6
+#
+
+class MealyError(Exception):
+    def __init__(self, nameOfMethod):
+        self.ExceptionMethod = nameOfMethod
+
+
+class Avtomat:
+    State = "A"
+
+    def etch(self):
+        if(self.State == "A"):
+            self.State = "B"
+            return 0
+        elif(self.State == "B"):
+            self.State = "D"
+            return 2
+        elif(self.State == "C"):
+            self.State = "D"
+            return 4
+        elif(self.State == "E"):
+            self.State = "F"
+            return 7
+        else:
+            raise MealyError(self.etch.__name__)
+
+    def init(self):
+        if(self.State == "B"):
+            return 3
+        elif(self.State == "C"):
+            self.State = "A"
+            return 5
+        elif(self.State == "D"):
+            self.State = "E"
+            return 6
+        elif(self.State == "F"):
+            self.State = "D"
+            return 8
+        else:
+            raise MealyError(self.init.__name__)
+
+    def pan(self):
+        if(self.State == "B"):
+            self.State = "C"
+            return 1
+        else:
+            raise MealyError(self.pan.__name__)
+
+
+def main():
+    return Avtomat()
+
+
+def test():
+    o = main()
+    assert o.etch() == 0
+    assert o.etch() == 2
+    o.State = "C"
+    assert o.etch() == 4
+    o.State = "E"
+    assert o.etch() == 7
+    o.State = "D"
+    try:
+        assert o.etch()
+    except MealyError:
+        pass
+
+    o.State = "B"
+    assert o.init() == 3
+    o.State = "C"
+    assert o.init() == 5
+    o.State = "D"
+    assert o.init() == 6
+    o.State = "F"
+    assert o.init() == 8
+    o.State = "A"
+    try:
+        assert o.init()
+    except MealyError:
+        pass
+
+    o.State = "B"
+    assert o.pan() == 1
+    try:
+        assert o.pan()
+    except MealyError:
+        pass
