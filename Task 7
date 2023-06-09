@@ -2,11 +2,18 @@
 # https://extendsclass.com/python-formatter.html
 #
 
+# Содержание:
+# decimal_parts to decimal
+# decimal to hex
+# hex to hex_parts
+# str(decimal) to hex
+# hex to decimal
+
 #---------------------------------------------
 #                   7
 #---------------------------------------------
 
-### Вариант 13
+### Вариант 13 (Андрей Лахов)
 # Входные: main({'Z1': '4', 'Z2': '82', 'Z3': '11', 'Z4': '21', 'Z5': '4'})                   ### decimal_parts to decimal
 # Выходные: 4906276
 
@@ -32,8 +39,9 @@ def converter(Z1, Z2, Z3, Z4, Z5):
 def main(x):
     return converter(x['Z1'], x['Z2'], x['Z3'], x['Z4'], x['Z5'])
     
-# >>> main(64263930) // Юля Трофимова
-# '0x5af527a'
+### Вариант Юля Трофимова
+# Входные: main(64263930)                                                                      ###  decimal to hex
+# Выходные: '0x5af527a'
 
 def main(num):
     num = int(num)
@@ -43,13 +51,22 @@ def main(num):
     d4 = (num >> 23) & (2**4 - 1)
     return hex((d2 << 21) + (d4 << 17) + (d3 << 7) + d1)
     
-# >>> main('0x1ac0998c') // 21 (Саша Сердюков)
-# [('V1', '0xc'), ('V2', '0x3'), ('V3', '0x4c'), ('V4', '0x0'), ('V5', '0x6b'), ('V6', '0x0')]
+### Вариант 21 (Саша Сердюков)
+# Входные: main('0x1ac0998c')                                                                                                   ### hex to hex_parts
+# Выходные: [('V1', '0xc'), ('V2', '0x3'), ('V3', '0x4c'), ('V4', '0x0'), ('V5', '0x6b'), ('V6', '0x0')]
 
+def main(a):
+    v1 = hex(int(a, 16) & 0x7F)
+    v2 = hex((int(a, 16) & 0x1FF) >> 7)
+    v3 = hex((int(a, 16) & 0x7FFFF) >> 9)
+    v4 = hex((int(a, 16) & 0x3FFFFF) >> 19)
+    v5 = hex((int(a, 16) & 0xFFFFFFFF) >> 22)
+    v6 = hex((int(a, 16) & 0x3FFFFFFFF) >> 32)
+    return [('v1', v1), ('v2', v2), ('v3', v3), ('v4', v4), ('v5', v5), ('v6', v6)]
 
-
-# >>> main('1422331148') // 22 (Соня Сивцова)
-# '0x6230d0c'
+### Вариант 22 (Соня Сивцова)
+# Входные: main('1422331148')                                                                                                   ### str(decimal) to hex
+# Выходные: '0x6230d0c'
 
 #####Первое решение(оптимальное)
 def main(x):
@@ -90,9 +107,9 @@ def main(decimal_string):
     
     return hex(int(w3 + w5 + w2 + w1, 2))
 
-
-# main('0x38f1553')        // 28
-# '62432083'
+### Вариант 28
+# Входные: main('0x38f1553')                                                        # hex to decimal
+# Выходные: '62432083'
 
 def main(x):
     dec = int(x, 16)
